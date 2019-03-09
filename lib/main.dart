@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'NewsResponse.dart';
+import 'newsResponse.dart';
+import 'article.dart';
 
 void main() => runApp(new MyApp());
 
@@ -33,7 +34,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-      NewsResponse  newsResponse ;
+      NewsResponse  newsResponse;
+      List<Articles> articles;
 
   fetchJSON() async {
     var Response = await http.get(
@@ -45,9 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
       String responseBody = Response.body;
       String jsonString = responseBody;
       final jsonResponse = json.decode(jsonString);
-       newsResponse = new NewsResponse.fromJson(jsonResponse);
+      newsResponse = new NewsResponse.fromJson(jsonResponse);
       setState(() {
-        print(newsResponse.articles[0].description);
+
+        articles=newsResponse.articles;
+      // print(newsResponse.articles[0].description);
       });
     } else {
       print('Something went wrong. \nResponse Code : ${Response.statusCode}');
@@ -60,6 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
+      Widget _buildProductItem(BuildContext context, int index) {
+        return  new Card(
+          child:new Column(
+            children: <Widget>[
+            new  Text(newsResponse.articles[index].description, style:new TextStyle(color: Colors.deepPurple))
+            ],
+          ),
+        );
+      }
 
 
 
@@ -71,8 +84,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: new Text(widget.title),
       ),
-      body: new Center()
-     // This trailing comma makes auto-formatting nicer for build methods.
+      body: new ListView.builder(
+
+    itemCount: articles == null ? 0 : articles.length,
+
+      itemBuilder: (BuildContext context, int index) {
+
+        return new Card(
+
+          child: new InkWell(child:new Container(child: new Row(
+            children: <Widget>[ new  Column(
+              children: <Widget>[new Image.network(articles[index].urlToImage==null?"https://picsum.photos/250?image=9":articles[index].urlToImage,width:100.0,height: 100.0 ,)],
+            ),new Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[ new Column(children: <Widget>[
+                new Text(articles[index].author==null?"":articles[index].author),
+                new Text(articles[index].publishedAt==null?"":articles[index].publishedAt)
+              ],)],
+            )],
+          )
+
+          ) )
+
+
+
+
+
+        );
+
+      },
+
+    )
+
     );
   }
 
