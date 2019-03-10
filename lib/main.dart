@@ -90,26 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       itemBuilder: (BuildContext context, int index) {
 
-        return new Card(
-
-          child: new InkWell(child:new Container(child: new Row(
-            children: <Widget>[ new  Column(
-              children: <Widget>[new Image.network(articles[index].urlToImage==null?"https://picsum.photos/250?image=9":articles[index].urlToImage,width:100.0,height: 100.0 ,)],
-            ),new Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[ new Column(children: <Widget>[
-                new Text(articles[index].author==null?"":articles[index].author),
-                new Text(articles[index].publishedAt==null?"":articles[index].publishedAt)
-              ],)],
-            )],
-          )
-
-          ) )
-
-
-
-
-
-        );
+        return new Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: new ListTile(   title: new Text(articles[index].title==null?"":articles[index].title),
+                                subtitle: new Text(articles[index].publishedAt==null?"":articles[index].publishedAt),
+          leading: new Image.network(articles[index].urlToImage==null?"":articles[index].urlToImage,fit:BoxFit.contain),),
+        ) ;
 
       },
 
@@ -121,3 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 }
+
+
+
+
+
