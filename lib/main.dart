@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'newsResponse.dart';
 import 'article.dart';
+import 'detailScreen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -64,15 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-      Widget _buildProductItem(BuildContext context, int index) {
-        return  new Card(
-          child:new Column(
-            children: <Widget>[
-            new  Text(newsResponse.articles[index].description, style:new TextStyle(color: Colors.deepPurple))
-            ],
-          ),
-        );
-      }
+
 
 
 
@@ -92,9 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
         return new Padding(
           padding: const EdgeInsets.all(8.0),
-          child: new ListTile(   title: new Text(articles[index].title==null?"":articles[index].title),
+          child: new ListTile(   title: new Text(articles[index].title==null?"":articles[index].title), onTap:() {
+            Navigator.push(context, new MaterialPageRoute(builder: (context) => new  NewsDetail(articles:articles[index])));},
                                 subtitle: new Text(articles[index].publishedAt==null?"":articles[index].publishedAt),
-          leading: new Image.network(articles[index].urlToImage==null?"":articles[index].urlToImage,fit:BoxFit.contain),),
+          leading: new Image.network(articles[index].urlToImage==null?"":articles[index].urlToImage,fit:BoxFit.contain),)
+
+
         ) ;
 
       },
