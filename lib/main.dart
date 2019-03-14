@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: new MyHomePage(title: 'News Api'),
@@ -26,8 +26,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-
-
   final String title;
 
   @override
@@ -35,8 +33,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-      NewsResponse  newsResponse;
-      List<Articles> articles;
+  NewsResponse newsResponse;
+  List<Articles> articles;
 
   fetchJSON() async {
     var Response = await http.get(
@@ -50,9 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
       final jsonResponse = json.decode(jsonString);
       newsResponse = new NewsResponse.fromJson(jsonResponse);
       setState(() {
-
-        articles=newsResponse.articles;
-      // print(newsResponse.articles[0].description);
+        articles = newsResponse.articles;
+        // print(newsResponse.articles[0].description);
       });
     } else {
       print('Something went wrong. \nResponse Code : ${Response.statusCode}');
@@ -64,47 +61,38 @@ class _MyHomePageState extends State<MyHomePage> {
     fetchJSON();
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
-      appBar: new AppBar(
-
-        title: new Text(widget.title),
-      ),
-      body: new ListView.builder(
-
-    itemCount: articles == null ? 0 : articles.length,
-
-      itemBuilder: (BuildContext context, int index) {
-
-        return new Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new ListTile(   title: new Text(articles[index].title==null?"":articles[index].title), onTap:() {
-            Navigator.push(context, new MaterialPageRoute(builder: (context) => new  NewsDetail(articles:articles[index])));},
-                                subtitle: new Text(articles[index].publishedAt==null?"":articles[index].publishedAt),
-          leading: new Image.network(articles[index].urlToImage==null?"":articles[index].urlToImage,fit:BoxFit.contain),)
-
-
-        ) ;
-
-      },
-
-    )
-
-    );
+        appBar: new AppBar(
+          title: new Text(widget.title),
+        ),
+        body: new ListView.builder(
+          itemCount: articles == null ? 0 : articles.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new ListTile(
+                  title: new Text(articles[index].title == null
+                      ? ""
+                      : articles[index].title),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) =>
+                                new NewsDetail(articles: articles[index])));
+                  },
+                  subtitle: new Text(articles[index].publishedAt == null
+                      ? ""
+                      : articles[index].publishedAt),
+                  leading: new Container( color: Colors.greenAccent, height:100.0,width: 270.0 , child: new Image.network(
+                      articles[index].urlToImage == null
+                          ? ""
+                          : articles[index].urlToImage,
+                      fit: BoxFit.cover)) ,
+                ));
+          },
+        ));
   }
-
-
-
 }
-
-
-
-
-
