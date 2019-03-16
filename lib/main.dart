@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'newsResponse.dart';
@@ -46,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       String responseBody = Response.body;
       String jsonString = responseBody;
       final jsonResponse = json.decode(jsonString);
-      newsResponse = new NewsResponse.fromJson(jsonResponse);
+      newsResponse =  NewsResponse.fromJson(jsonResponse);
       setState(() {
         articles = newsResponse.articles;
         // print(newsResponse.articles[0].description);
@@ -63,30 +62,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.title),
+    return  Scaffold(
+        appBar:  AppBar(
+          title:  Text(widget.title),
         ),
-        body: new ListView.builder(
+        body:  ListView.builder(
           itemCount: articles == null ? 0 : articles.length,
           itemBuilder: (BuildContext context, int index) {
-            return new Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new ListTile(
-                  title: new Text(articles[index].title == null
-                      ? ""
-                      : articles[index].title),
+            return  Padding(
+                padding: const EdgeInsets.only(bottom:8.0),
+                child:   ListTile(
+
+                  title:  Text(  articles[index].title == null ? ""
+                      : articles[index].title,style: TextStyle(fontFamily: "Lato",fontSize:18)),
                   onTap: () {
                     Navigator.push(
                         context,
-                        new MaterialPageRoute(
+                         MaterialPageRoute(
                             builder: (context) =>
-                                new NewsDetail(articles: articles[index])));
+                                 NewsDetail(articles: articles[index])));
                   },
-                  subtitle: new Text(articles[index].publishedAt == null
+                  subtitle:  Text(articles[index].publishedAt == null
                       ? ""
                       : articles[index].publishedAt),
-                  leading: new Container( color: Colors.greenAccent, height:100.0,width: 270.0 , child: new Image.network(
+                  leading:  Container( color: Colors.greenAccent, height:70.0,width: 100.0 , child: new Image.network(
                       articles[index].urlToImage == null
                           ? ""
                           : articles[index].urlToImage,

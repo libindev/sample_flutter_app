@@ -29,9 +29,15 @@ class NewsDetailState extends State<NewsDetail> {
                         fit: BoxFit.fill)),
                 new Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: <Widget>[
                   new IconButton(
-                      icon: new Icon(Icons.arrow_back),
+
+                      icon:  Icon(Icons.arrow_back),
                       color: Colors.white,
-                      onPressed: () {}),
+                      onPressed: () {
+
+                        Navigator.of(context).pop();
+                      }
+
+                      ),
                   new Material(
                       elevation: 4.0,
                       borderRadius: new BorderRadius.circular(20.0),
@@ -42,7 +48,8 @@ class NewsDetailState extends State<NewsDetail> {
                               borderRadius: new BorderRadius.circular(20.0)),
                           child: new Icon(
                             Icons.favorite,
-                            color: Colors.red,
+                            color: Colors.blue
+                            ,
                           )))
                 ])
               ]),
@@ -50,13 +57,14 @@ class NewsDetailState extends State<NewsDetail> {
                   padding: new EdgeInsets.all(8.0),
                   child: new Text(
                     widget.articles.title,
-                    style: new TextStyle(fontSize: 20.0, fontFamily: "Roboto"),
+                    style: new TextStyle( color: Colors.black
+                        , fontStyle: FontStyle.normal, fontSize: 20.0, fontFamily: "Lato"),
                   )),
               new Padding(
                   padding: new EdgeInsets.all(10.0),
                   child: new Text("   "+
                     widget.articles.description,
-                    style: new TextStyle(fontSize: 18.0, fontFamily: "Roboto"),
+                    style: new TextStyle(fontSize: 18.0, fontFamily: "Lato",fontStyle: FontStyle.normal),
                   ))
             ])
       ],
